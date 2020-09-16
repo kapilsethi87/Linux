@@ -230,7 +230,7 @@ systemctl start named
 systemctl enable named
 ```
 
-##### When you run below command so you will see in end of the output `"SERVER: 192.168.0.60#53(192.168.0.60)"`. It's mean your DNS Server perfectly working.
+##### When you run below command so you will see in end of the output `"SERVER: 192.168.0.10#53(192.168.0.10)"`. It's mean your DNS Server perfectly working.
 ```
 [sysadmin@dns-server ~]$ dig
 
@@ -298,7 +298,7 @@ m.root-servers.net.     518271  IN      AAAA    2001:dc3::35
 
 ##### Now we'll check our Domain Name with dig and nslookup command.
 ```
-[sysadmin@dns-server ~]$ dig dns1.godiwal.com
+[sysadmin@dns-server ~]$ dig masterdns.sethi.com
 
 ; <<>> DiG 9.11.4-P2-RedHat-9.11.4-16.P2.el7_8.2 <<>> dns1.godiwal.com
 ;; global options: +cmd
@@ -312,27 +312,27 @@ m.root-servers.net.     518271  IN      AAAA    2001:dc3::35
 ;dns1.godiwal.com.              IN      A
 
 ;; ANSWER SECTION:
-dns1.godiwal.com.       86400   IN      A       192.168.0.60
+dns1.godiwal.com.       86400   IN      A       192.168.0.10
 
 ;; AUTHORITY SECTION:
-godiwal.com.            86400   IN      NS      dns1.godiwal.com.
+godiwal.com.            86400   IN      NS      masterdns.sethi.com.
 
 ;; Query time: 0 msec
-;; SERVER: 192.168.0.60#53(192.168.0.60)
+;; SERVER: 192.168.0.10#53(192.168.0.10)
 ;; WHEN: Mon May 11 10:03:51 IST 2020
 ;; MSG SIZE  rcvd: 75
 
 [sysadmin@dns-server ~]$
-[sysadmin@dns-server ~]$ nslookup dns1.godiwal.com
-Server:         192.168.0.60
-Address:        192.168.0.60#53
+[sysadmin@dns-server ~]$ nslookup masterdns.sethi.com
+Server:         192.168.0.10
+Address:        192.168.0.10#53
 
-Name:   dns1.godiwal.com
-Address: 192.168.0.60
+Name:   masterdns.sethi.com
+Address: 192.168.0.10
 
 [sysadmin@dns-server ~]$
-[sysadmin@dns-server ~]$ nslookup 192.168.0.60
-60.0.168.192.in-addr.arpa       name = dns1.godiwal.com.
+[sysadmin@dns-server ~]$ nslookup 192.168.0.10
+10.0.168.192.in-addr.arpa       name = masterdns.sethi.com.
 
 [sysadmin@dns-server ~]$
 
@@ -343,8 +343,8 @@ Address: 192.168.0.60
 
 ##### Check Client to Server connectivity with ping command.
 ```
-[root@dns-client ~]# ping 192.168.0.60
-PING 192.168.0.60 (192.168.0.60) 56(84) bytes of data.
+[root@dns-client ~]# ping 192.168.0.10
+PING 192.168.0.60 (192.168.0.10) 56(84) bytes of data.
 64 bytes from 192.168.0.60: icmp_seq=1 ttl=64 time=1.07 ms
 64 bytes from 192.168.0.60: icmp_seq=2 ttl=64 time=0.417 ms
 64 bytes from 192.168.0.60: icmp_seq=3 ttl=64 time=0.414 ms

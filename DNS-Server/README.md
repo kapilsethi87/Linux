@@ -126,20 +126,24 @@ Add the following lines:
 ```bash
 $TTL 86400
 @   IN  SOA     masterdns.sethi.com. root.sethi.com. (
-        2011071001  ;Serial
+        1001        ;Serial
         3600        ;Refresh
         1800        ;Retry
         604800      ;Expire
         86400       ;Minimum TTL
 )
+;Name Server Information
 @       IN  NS          masterdns.sethi.com
-@       IN  NS          secondarydns.sethi.com.
+
+;IP address of Name Server
 @       IN  A           192.168.0.10
-@       IN  A           192.168.0.11
-@       IN  A           192.168.0.12
+
+;Mail exchanger
+sethi.com. IN  MX 10   mail.sethi.com.
+
+;A - Record HostName To IP Address
 masterdns       IN  A   192.168.0.10
-secondarydns    IN  A   192.168.0.11
-client          IN  A   192.168.0.12
+
 ```
 
 2.2 Create Reverse Zone
@@ -151,21 +155,24 @@ Add the following lines:
 ```bash
 $TTL 86400
 @   IN  SOA     masterdns.sethi.com. root.sethi.com. (
-        2011071001  ;Serial
+        1001        ;Serial
         3600        ;Refresh
         1800        ;Retry
         604800      ;Expire
         86400       ;Minimum TTL
 )
+;Name Server Information
 @       IN  NS          masterdns.sethi.com.
-@       IN  NS          secondarydns.sethi.com.
+
+;Reverse lookup for Name Server
 @       IN  PTR         sethi.com.
+
 masterdns       IN  A   192.168.0.10
-secondarydns    IN  A   192.168.0.11
-client          IN  A   192.168.0.12
+
+;PTR Record IP address to HostName
 101     IN  PTR         masterdns.sethi.com.
-102     IN  PTR         secondarydns.sethi.com.
-103     IN  PTR         client.sethi.com.
+110     IN  PTR         mail.sethi.com. 
+
 ```
 
 3. Start the DNS service

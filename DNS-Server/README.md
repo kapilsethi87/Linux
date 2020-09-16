@@ -5,43 +5,36 @@
 
 ## Pre-requisites
 
-#### DNS Server Details:
+#### Primary (Master) DNS Server Details::
 ```
 Operating System     : CentOS Linux release 7.7.1908 (Core)
 Hostname             : dns-server
-IP Address           : 192.168.0.60/24
+IP Address           : 192.168.0.10/24
 ```
-#### Client Details:
+#### Secondary (Slave) DNS Server Details:
 ```
 Operating System     : CentOS Linux release 7.6.1810 (Core)  
 Hostname             : dns-client
-IP Address           : 192.168.0.61/24
+IP Address           : 192.168.0.11/24
 ```
 **###################################################################################**
 # `DNS SERVER`
 
-## DNS Server Installation
+## Setup Primary (Master) DNS Server
 
-##### First we create sudo user `sysadmin` passwordless.
-```
-[root@dns-server ~]# adduser sysadmin
-[root@dns-server ~]# passwd sysadmin
-[root@dns-server ~]# visudo
-```
-###### Sudo user entry image screenshot
-<img src="/DNS-Server/img/" width="600" hight="100">
+
 
 ##### Switch to sysadmin user and provide the `static IP address` to DNS Server.
 ```
 [root@dns-server ~]# su -l sysadmin
-[sysadmin@dns-server ~]$ sudo cat /etc/sysconfig/network-scripts/ifcfg-enp0s3
+[sysadmin@dns-server ~]$ sudo cat /etc/sysconfig/network-scripts/ifcfg-ens33
 TYPE=Ethernet
 BOOTPROTO=static
 NAME=enp0s3
-IPADDR=192.168.0.60
+IPADDR=192.168.0.10
 NETMASK=255.255.255.0
-GATEWAY=192.168.0.1
-DEVICE=enp0s3
+GATEWAY=192.168.0.2
+DEVICE=ens33
 ONBOOT=yes
 [sysadmin@dns-server ~]$
 ```
@@ -50,7 +43,7 @@ ONBOOT=yes
 [sysadmin@dns-server ~]$ sudo cat /etc/sysconfig/network
 # Created by anaconda
 
-HOSTNAME=dns1.godiwal.com
+HOSTNAME=dns1.sethi.com
 [sysadmin@dns-server ~]$
 ```
 ###### Hostname entry image screenshot
@@ -62,7 +55,7 @@ HOSTNAME=dns1.godiwal.com
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
-192.168.0.60   dns1.godiwal.com
+192.168.0.10   dns1.sethi.com
 [sysadmin@dns-server ~]$
 ```
 ###### Hostname entry image screenshot
@@ -71,37 +64,195 @@ HOSTNAME=dns1.godiwal.com
 ##### Add `nameserver` in `"/etc/resolv.conf"` file for resolve the nameserver.
 ```
 [sysadmin@dns-server ~]$ sudo cat /etc/resolv.conf
-nameserver 192.168.0.60
+nameserver 192.168.0.10
 ```
 ###### Nameserver entry image screenshot
 <img src="Images/DNS_Image_4.JPG" width="600" hight="100">
 
-##### Install `bind`package and all depencies.
+### Install bind packages on your server
+```bash
+yum install bind bind-utils -y
 ```
-[sysadmin@dns-server ~]$ sudo yum install bind* -y
-[sysadmin@dns-server ~]$ sudo cp /etc/named.conf /etc/named.conf_orig
-[sysadmin@dns-server ~]$ sudo vim /etc/named.conf
-```
-##### Add/Change the lines in `"/etc/named.conf"`.
-```
-// configuration located in /usr/share/doc/bind-{version}/Bv9ARM.html
+### Add the lines as shown in bold:
+```bash
+//
+// named.conf
+//
+// Provided by Red Hat bind package to configure the ISC BIND named(8) DNS
+// server as a caching only nameserver (as a localhost DNS resolver only).
+//
+// See /usr/share/doc/bind*/sample/ for example named configuration files.
+//
 
 options {
-        listen-on port 53 { 192.168.0.60; };   ### Master DNS IP ###
-#       listen-on-v6 port 53 { ::1; };
-        directory       "/var/named";
-        dump-file       "/var/named/data/cache_dump.db";
-        statistics-file "/var/named/data/named_stats.txt";
-        memstatistics-file "/var/named/data/named_mem_stats.txt";
-        recursing-file  "/var/named/data/named.recursing";
-        secroots-file   "/var/named/data/named.secroots";
-        allow-query     { any; };
+    listen-on port 53 { 127.0.0.1; **192.168.0.10**;}; ### Master DNS IP ###
+#    listen-on-v6 port 53 { ::1; };
+    directory     "/var/named";
+    dump-file     "/var/named/data/cache_dump.db";
+    statistics-file "/var/named/data/named_stats.txt";
+    memstatistics-file "/var/named/data/named_mem_stats.txt";
+    allow-query     { localhost; **192.168.0.0/24;**}; ### IP Range ###
+    allow-transfer{ localhost; **192.168.0.11;** };   ### Slave DNS IP ###
 
-        /*
-         - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
+    /* 
+     - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
+     - If you are building a RECURSIVE (caching) DNS server, you need to enable 
+       recursion. 
+     - If your recursive DNS server has a public IP address, you MUST enable access 
+       control to limit queries to your legitimate users. Failing to do so will
+       cause your server to become part of large scale DNS amplification 
+       attacks. Implementing BCP38 within your network would greatly
+       reduce such attack surface 
+    */
+    recursion yes;
+
+    dnssec-enable yes;
+    dnssec-validation yes;
+    dnssec-lookaside auto;
+
+    /* Path to ISC DLV key */
+    bindkeys-file "/etc/named.iscdlv.key";
+
+    managed-keys-directory "/var/named/dynamic";
+
+    pid-file "/run/named/named.pid";
+    session-keyfile "/run/named/session.key";
+};
+
+logging {
+        channel default_debug {
+                file "data/named.run";
+                severity dynamic;
+        };
+};
+
+zone "." IN {
+    type hint;
+    file "named.ca";
+};
+
+**zone "sethi.com" IN {
+type master;
+file "forward.sethi";
+allow-update { none; };
+};
+zone "0.168.192.in-addr.arpa" IN {
+type master;
+file "reverse.sethi";
+allow-update { none; };
+};**
+
+include "/etc/named.rfc1912.zones";
+include "/etc/named.root.key";
 ```
-###### Hostname Entry Image Screenshot
-<img src="Images/DNS_Image_5.JPG" width="600" hight="100">
+
+2. Create Zone files
+Create forward and reverse zone files which we mentioned in the ‘/etc/named.conf’ file.
+
+2.1 Create Forward Zone
+Create forward.sethi file in the ‘/var/named’ directory.
+```bash
+vi /var/named/forward.sethi
+```
+Add the following lines:
+```bash
+$TTL 86400
+@   IN  SOA     masterdns.sethi.com. root.sethi.com. (
+        2011071001  ;Serial
+        3600        ;Refresh
+        1800        ;Retry
+        604800      ;Expire
+        86400       ;Minimum TTL
+)
+@       IN  NS          masterdns.sethi.com
+@       IN  NS          secondarydns.sethi.com.
+@       IN  A           192.168.0.10
+@       IN  A           192.168.0.11
+@       IN  A           192.168.0.12
+masterdns       IN  A   192.168.0.10
+secondarydns    IN  A   192.168.0.11
+client          IN  A   192.168.0.12
+```
+
+2.2 Create Reverse Zone
+Create reverse.unixmen file in the ‘/var/named’ directory.
+
+vi /var/named/reverse.sethi
+
+Add the following lines:
+```bash
+$TTL 86400
+@   IN  SOA     masterdns.sethi.com. root.sethi.com. (
+        2011071001  ;Serial
+        3600        ;Refresh
+        1800        ;Retry
+        604800      ;Expire
+        86400       ;Minimum TTL
+)
+@       IN  NS          masterdns.sethi.com.
+@       IN  NS          secondarydns.sethi.com.
+@       IN  PTR         sethi.com.
+masterdns       IN  A   192.168.0.10
+secondarydns    IN  A   192.168.0.11
+client          IN  A   192.168.0.12
+101     IN  PTR         masterdns.sethi.com.
+102     IN  PTR         secondarydns.sethi.com.
+103     IN  PTR         client.sethi.com.
+```
+
+3. Start the DNS service
+Enable and start DNS service:
+```bash
+systemctl enable named
+systemctl start named
+```
+
+4. Firewall Configuration
+We must allow the DNS service default port 53 through firewall.
+```bash
+firewall-cmd --permanent --add-port=53/tcp
+firewall-cmd --permanent --add-port=53/udp
+```
+
+5. Restart Firewall
+firewall-cmd --reload
+
+6. Configuring Permissions, Ownership, and SELinux
+Run the following commands one by one:
+```bash
+chgrp named -R /var/named
+chown -v root:named /etc/named.conf
+restorecon -rv /var/named
+restorecon /etc/named.conf
+```
+
+7. Test DNS configuration and zone files for any syntax errors
+Check DNS default configuration file:
+```bash
+named-checkconf /etc/named.conf
+```
+If it returns nothing, your configuration file is valid.
+
+### Check Forward zone:
+```bash
+named-checkzone sethi.com /var/named/forward.sethi
+```
+Sample output:
+```bash
+zone unixmen.local/IN: loaded serial 2011071001
+OK
+```
+
+### Check reverse zone:
+```bash
+named-checkzone sethi.com /var/named/reverse.sethi 
+```
+Sample Output:
+```bash
+zone unixmen.local/IN: loaded serial 2011071001
+OK
+```
+
 
 ##### Take backup of `named.rfc1912.zones` and add/change the entry.
 ```

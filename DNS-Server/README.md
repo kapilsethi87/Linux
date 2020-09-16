@@ -219,7 +219,7 @@ named-checkzone sethi.com /var/named/reverse.sethi
 ```
 Sample Output:
 ```bash
-zone unixmen.local/IN: loaded serial 2011071001
+zone sethi.com/IN: loaded serial 1001
 OK
 ```
 

@@ -53,14 +53,14 @@ yum install bind bind-utils -y
 //
 
 options {
-    listen-on port 53 { 127.0.0.1; **192.168.0.10**;}; ### Master DNS IP ###
+    listen-on port 53 { 127.0.0.1; `192.168.0.10`;}; ### Master DNS IP ###
 #    listen-on-v6 port 53 { ::1; };
     directory     "/var/named";
     dump-file     "/var/named/data/cache_dump.db";
     statistics-file "/var/named/data/named_stats.txt";
     memstatistics-file "/var/named/data/named_mem_stats.txt";
-    allow-query     { localhost; **192.168.0.0/24;**}; ### IP Range ###
-    allow-transfer{ localhost; **192.168.0.11;** };   ### Slave DNS IP ###
+    allow-query     { localhost; `192.168.0.0/24;`}; ### IP Range ###
+    allow-transfer{ localhost; `192.168.0.11;` };   ### Slave DNS IP ###
 
     /* 
      - If you are building an AUTHORITATIVE DNS server, do NOT enable recursion.
@@ -99,7 +99,7 @@ zone "." IN {
     file "named.ca";
 };
 
-**zone "sethi.com" IN {
+`zone "sethi.com" IN {
 type master;
 file "forward.sethi";
 allow-update { none; };
@@ -108,7 +108,7 @@ zone "0.168.192.in-addr.arpa" IN {
 type master;
 file "reverse.sethi";
 allow-update { none; };
-};**
+};`
 
 include "/etc/named.rfc1912.zones";
 include "/etc/named.root.key";

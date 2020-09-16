@@ -27,7 +27,7 @@ IP Address           : 192.168.0.61/24
 [root@dns-server ~]# visudo
 ```
 ###### Sudo user entry image screenshot
-<img src="Images/DNS_Image_1.JPG" width="600" hight="100">
+<img src="/DNS-Server/img/DNS-1.jfif" width="600" hight="100">
 
 ##### Switch to sysadmin user and provide the `static IP address` to DNS Server.
 ```

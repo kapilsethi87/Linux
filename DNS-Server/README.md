@@ -3,6 +3,8 @@
 
 <img src="/DNS-Server/img/DNS.JPG" width="400" hight="500">
 
+DNS, stands for Domain Name System, translates hostnames or URLs into IP addresses. For example, if we type www.google.com in browser, the DNS server translates the domain name into its associated ip address. Since the IP addresses are hard to remember all time, DNS servers are used to translate the hostnames like www.google.com to 8.xxx.xx.xxx. So it makes easy to remember the domain names instead of its IP address.
+
 ## Pre-requisites
 
 #### Primary (Master) DNS Server Details::
@@ -21,49 +23,6 @@ IP Address           : 192.168.0.11/24
 # `DNS SERVER`
 
 ## Setup Primary (Master) DNS Server
-
-
-
-##### Switch to sysadmin user and provide the `static IP address` to DNS Server.
-```
-[root@dns-server ~]# su -l sysadmin
-[sysadmin@dns-server ~]$ sudo cat /etc/sysconfig/network-scripts/ifcfg-ens33
-TYPE=Ethernet
-BOOTPROTO=static
-NAME=enp0s3
-IPADDR=192.168.0.10
-NETMASK=255.255.255.0
-GATEWAY=192.168.0.2
-DEVICE=ens33
-ONBOOT=yes
-[sysadmin@dns-server ~]$
-```
-##### Set the `hostname` in the network file.
-```
-[sysadmin@dns-server ~]$ sudo cat /etc/sysconfig/network
-# Created by anaconda
-
-HOSTNAME=dns1.sethi.com
-[sysadmin@dns-server ~]$
-```
-
-
-##### Add entry `"Server_IP   Your_Domain_Name"` in `"/etc/hosts"` file 
-```
-[sysadmin@dns-server ~]$ sudo cat /etc/hosts
-127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
-::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
-
-192.168.0.10   dns1.sethi.com
-[sysadmin@dns-server ~]$
-```
-
-
-##### Add `nameserver` in `"/etc/resolv.conf"` file for resolve the nameserver.
-```
-[sysadmin@dns-server ~]$ sudo cat /etc/resolv.conf
-nameserver 192.168.0.10
-```
 
 ### Install bind packages on your server
 ```bash
@@ -250,6 +209,46 @@ Sample Output:
 zone unixmen.local/IN: loaded serial 2011071001
 OK
 ```
+
+##### Switch to sysadmin user and provide the `static IP address` to DNS Server.
+```
+[root@dns-server ~]# su -l sysadmin
+[sysadmin@dns-server ~]$ sudo cat /etc/sysconfig/network-scripts/ifcfg-ens33
+TYPE=Ethernet
+BOOTPROTO=static
+NAME=enp0s3
+IPADDR=192.168.0.10
+NETMASK=255.255.255.0
+GATEWAY=192.168.0.2
+DEVICE=ens33
+ONBOOT=yes
+[sysadmin@dns-server ~]$
+```
+##### Set the `hostname` in the network file.
+```
+[sysadmin@dns-server ~]$ sudo cat /etc/sysconfig/network
+# Created by anaconda
+
+HOSTNAME=dns1.sethi.com
+[sysadmin@dns-server ~]$
+```
+
+##### Add entry `"Server_IP   Your_Domain_Name"` in `"/etc/hosts"` file 
+```
+[sysadmin@dns-server ~]$ sudo cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+192.168.0.10   dns1.sethi.com
+[sysadmin@dns-server ~]$
+```
+
+##### Add `nameserver` in `"/etc/resolv.conf"` file for resolve the nameserver.
+```
+[sysadmin@dns-server ~]$ sudo cat /etc/resolv.conf
+nameserver 192.168.0.10
+```
+
 
 
 ##### Take backup of `named.rfc1912.zones` and add/change the entry.

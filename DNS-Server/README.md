@@ -8,13 +8,13 @@
 #### Primary (Master) DNS Server Details::
 ```
 Operating System     : CentOS Linux release 7.7.1908 (Core)
-Hostname             : dns-server
+Hostname             : masterdns.sethi.com
 IP Address           : 192.168.0.10/24
 ```
 #### Secondary (Slave) DNS Server Details:
 ```
 Operating System     : CentOS Linux release 7.6.1810 (Core)  
-Hostname             : dns-client
+Hostname             : secondarydns.sethi.com
 IP Address           : 192.168.0.11/24
 ```
 **###################################################################################**

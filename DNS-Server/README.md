@@ -211,7 +211,9 @@ firewall-cmd --permanent --add-port=53/udp
 ```
 
 5. Restart Firewall
+```bash
 firewall-cmd --reload
+```
 
 6. Configuring Permissions, Ownership, and SELinux
 Run the following commands one by one:

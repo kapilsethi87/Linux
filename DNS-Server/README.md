@@ -1,7 +1,7 @@
 **##################################################################################**
 # SETTING UP DNS SERVER ON CENTOS 7 STEP BY STEP !!!
 
-<img src="/DNS-Server/img/DNS.JPG" width="300" hight="100">
+<img src="/DNS-Server/img/DNS.JPG" width="400" hight="500">
 
 ## Pre-requisites
 

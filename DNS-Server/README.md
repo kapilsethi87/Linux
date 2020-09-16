@@ -37,7 +37,11 @@ IP Address           : 192.168.0.12/24
 ```bash
 yum install bind bind-utils -y
 ```
-### Add the lines as shown in bold:
+
+1. Configure DNS Server
+Edit ‘/etc/named.conf’ file.
+
+**Add the lines as shown in bold:**
 ```bash
 //
 // named.conf

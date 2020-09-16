@@ -7,6 +7,8 @@ DNS, stands for Domain Name System, translates hostnames or URLs into IP address
 
 ## Pre-requisites
 
+For the purpose of this tutorial, I will be using three nodes. One will be acting as Master DNS server, the second system will be acting as Secondary DNS, and the third will be our DNS client. Here are my three systems details.
+
 #### Primary (Master) DNS Server Details::
 ```
 Operating System     : CentOS Linux release 7.7.1908 (Core)
@@ -19,6 +21,13 @@ Operating System     : CentOS Linux release 7.6.1810 (Core)
 Hostname             : secondarydns.sethi.com
 IP Address           : 192.168.0.11/24
 ```
+### Client Details:
+```bash
+Operating System     : CentOS Linux release 7.6.1810 (Core)
+Hostname             : client.sethi.com
+IP Address           : 192.168.0.12/24
+```
+
 **###################################################################################**
 # `DNS SERVER`
 

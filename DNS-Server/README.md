@@ -1,6 +1,8 @@
 **##################################################################################**
 # SETTING UP DNS SERVER ON CENTOS 7 STEP BY STEP !!!
 
+<img src="/DNS-Server/img/DNS-1.jfif" width="300" hight="100">
+
 ## Pre-requisites
 
 #### DNS Server Details:
@@ -27,7 +29,7 @@ IP Address           : 192.168.0.61/24
 [root@dns-server ~]# visudo
 ```
 ###### Sudo user entry image screenshot
-<img src="/DNS-Server/img/DNS-1.jfif" width="600" hight="100">
+<img src="/DNS-Server/img/" width="600" hight="100">
 
 ##### Switch to sysadmin user and provide the `static IP address` to DNS Server.
 ```

@@ -175,26 +175,19 @@ masterdns       IN  A   192.168.0.10
 
 ```
 
-3. Start the DNS service
-Enable and start DNS service:
-```bash
-systemctl enable named
-systemctl start named
-```
-
-4. Firewall Configuration
+3. Firewall Configuration
 We must allow the DNS service default port 53 through firewall.
 ```bash
 firewall-cmd --permanent --add-port=53/tcp
 firewall-cmd --permanent --add-port=53/udp
 ```
 
-5. Restart Firewall
+4. Restart Firewall
 ```bash
 firewall-cmd --reload
 ```
 
-6. Configuring Permissions, Ownership, and SELinux
+5. Configuring Permissions, Ownership, and SELinux
 Run the following commands one by one:
 ```bash
 chgrp named -R /var/named
@@ -203,7 +196,7 @@ restorecon -rv /var/named
 restorecon /etc/named.conf
 ```
 
-7. Test DNS configuration and zone files for any syntax errors
+6. Test DNS configuration and zone files for any syntax errors
 Check DNS default configuration file:
 ```bash
 named-checkconf /etc/named.conf
@@ -228,6 +221,13 @@ Sample Output:
 ```bash
 zone unixmen.local/IN: loaded serial 2011071001
 OK
+```
+
+7. Start the DNS service
+Enable and start DNS service:
+```bash
+systemctl start named
+systemctl enable named
 ```
 
 ##### Switch to sysadmin user and provide the `static IP address` to DNS Server.

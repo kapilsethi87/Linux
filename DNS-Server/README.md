@@ -46,8 +46,7 @@ ONBOOT=yes
 HOSTNAME=dns1.sethi.com
 [sysadmin@dns-server ~]$
 ```
-###### Hostname entry image screenshot
-<img src="Images/DNS_Image_2.JPG" width="600" hight="100">
+
 
 ##### Add entry `"Server_IP   Your_Domain_Name"` in `"/etc/hosts"` file 
 ```
@@ -58,16 +57,13 @@ HOSTNAME=dns1.sethi.com
 192.168.0.10   dns1.sethi.com
 [sysadmin@dns-server ~]$
 ```
-###### Hostname entry image screenshot
-<img src="Images/DNS_Image_3.JPG" width="600" hight="100">
+
 
 ##### Add `nameserver` in `"/etc/resolv.conf"` file for resolve the nameserver.
 ```
 [sysadmin@dns-server ~]$ sudo cat /etc/resolv.conf
 nameserver 192.168.0.10
 ```
-###### Nameserver entry image screenshot
-<img src="Images/DNS_Image_4.JPG" width="600" hight="100">
 
 ### Install bind packages on your server
 ```bash
@@ -306,8 +302,7 @@ zone "0.in-addr.arpa" IN {
 
 [sysadmin@dns-server ~]$
 ```
-###### `/etc/named.rfc1912.zones` entry image screenshot
-<img src="Images/DNS_Image_6.JPG" width="600" hight="100">
+
 
 ###### Check the all file in this directory `/var/named/`.
 ```
@@ -343,8 +338,6 @@ $TTL 1D
 dns1    IN      A       192.168.0.60
 [sysadmin@dns-server ~]$
 ```
-###### `forward.zone` entry image screenshot
-<img src="Images/DNS_Image_7.JPG" width="600" hight="100">
 
 ##### Copy named.localhost for create reverse lookup zone and then do some changes accordingly.
 ```
@@ -365,9 +358,6 @@ $TTL 1D
 [sysadmin@dns-server ~]$
 ```
 
-###### `reverse.zone` entry image screenshot
-<img src="Images/DNS_Image_8.JPG" width="600" hight="100">
-
 ##### We have to check `forward.zone` and `reverse.zone` file `group permission` and change with `named` group.
 ```
 [sysadmin@dns-server ~]$ sudo ls -l /var/named/
@@ -386,8 +376,6 @@ drwxrwx---. 2 root  named    6 Apr  1 07:46 dyndb-ldap
 drwxrwx---. 2 named named    6 Apr  7 20:11 slaves
 [sysadmin@dns-server ~]$
 ```
-##### Without change both file permission looking like this.
-<img src="Images/DNS_Image_9.JPG" width="600" hight="100">
 
 ##### So we will run below commands for that.
 ```
@@ -409,8 +397,7 @@ drwxrwx---. 2 root  named    6 Apr  1 07:46 dyndb-ldap
 drwxrwx---. 2 named named    6 Apr  7 20:11 slaves
 [sysadmin@dns-server ~]$
 ```
-##### After that both file permission looking like this.
-<img src="Images/DNS_Image_10.JPG" width="600" hight="100">
+
 
 ##### Check all file configuration is perfect or not. If you will get same output so everything is fine. 
 ```
@@ -529,8 +516,6 @@ m.root-servers.net.     518271  IN      AAAA    2001:dc3::35
 
 [sysadmin@dns-server ~]$
 ```
-##### Check below screenshot.
-<img src="Images/DNS_Image_11.JPG" width="600" hight="100">
 
 ##### Now we'll check our Domain Name with dig and nslookup command.
 ```
@@ -573,10 +558,6 @@ Address: 192.168.0.60
 [sysadmin@dns-server ~]$
 
 ```
-##### Check below screenshot respectively.
-<img src="Images/DNS_Image_12.JPG" width="600" hight="100">
-<img src="Images/DNS_Image_13.JPG" width="600" hight="100">
-<img src="Images/DNS_Image_14.JPG" width="600" hight="100">
 
 **###################################################################################**
 # `CLIENT HOST`
@@ -684,10 +665,6 @@ PING dns1.godiwal.com (192.168.0.60) 56(84) bytes of data.
 ^C
 [root@dns-client ~]#
 ```
-##### Check below screenshot respectively.
-<img src="Images/DNS_Image_15.JPG" width="600" hight="100">
-<img src="Images/DNS_Image_16.JPG" width="600" hight="100">
-<img src="Images/DNS_Image_17.JPG" width="600" hight="100">
 
 # `SUCCESSFULLY COMPLETE`
 **###################################################################################**

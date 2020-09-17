@@ -232,7 +232,7 @@ systemctl enable named
 
 ##### When you run below command so you will see in end of the output `"SERVER: 192.168.0.10#53(192.168.0.10)"`. It's mean your DNS Server perfectly working.
 ```
-dig
+[root@masterdns ~]# dig
 ; <<>> DiG 9.11.4-P2-RedHat-9.11.4-16.P2.el7_8.6 <<>>
 ;; global options: +cmd
 ;; Got answer:

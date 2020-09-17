@@ -313,15 +313,16 @@ sethi.com.              86400   IN      NS      masterdns.sethi.com.
 ;; WHEN: Thu Sep 17 08:58:01 IST 2020
 ;; MSG SIZE  rcvd: 78
 ```
+### Nslookup
+```
 [root@masterdns ~]# nslookup masterdns.sethi.com
 Server:         192.168.0.10
 Address:        192.168.0.10#53
 
 Name:   masterdns.sethi.com
-Address: 192.168.0.11
+Address: 192.168.0.10
+```
 
-
-[sysadmin@dns-server ~]$
 [sysadmin@dns-server ~]$ nslookup 192.168.0.10
 10.0.168.192.in-addr.arpa       name = masterdns.sethi.com.
 

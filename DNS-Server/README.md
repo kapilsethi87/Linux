@@ -416,7 +416,7 @@ sell.internettraffic.com. 55969 IN      A       34.90.60.247
 ```
 [root@client ~]# cat /etc/resolv.conf
 nameserver 192.168.0.60
-[root@client ~]# dig dns1.godiwal.com
+[root@client ~]# dig masterdns.sethi.com
 
 ; <<>> DiG 9.11.4-P2-RedHat-9.11.4-16.P2.el7_8.2 <<>> dns1.godiwal.com
 ;; global options: +cmd
@@ -430,13 +430,13 @@ nameserver 192.168.0.60
 ;dns1.godiwal.com.              IN      A
 
 ;; ANSWER SECTION:
-dns1.godiwal.com.       86400   IN      A       192.168.0.60
+dns1.godiwal.com.       86400   IN      A       192.168.0.10
 
 ;; AUTHORITY SECTION:
-godiwal.com.            86400   IN      NS      dns1.godiwal.com.
+godiwal.com.            86400   IN      NS      masterdns.sethi.com.
 
 ;; Query time: 1 msec
-;; SERVER: 192.168.0.60#53(192.168.0.60)
+;; SERVER: 192.168.0.10#53(192.168.0.10)
 ;; WHEN: Mon May 11 10:24:02 IST 2020
 ;; MSG SIZE  rcvd: 75
 

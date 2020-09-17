@@ -416,8 +416,9 @@ sell.internettraffic.com. 55969 IN      A       34.90.60.247
 ```
 [root@client ~]# cat /etc/resolv.conf
 nameserver 192.168.0.60
+```
+```
 [root@client ~]# dig masterdns.sethi.com
-
 ; <<>> DiG 9.11.4-P2-RedHat-9.11.4-16.P2.el7_8.2 <<>> dns1.godiwal.com
 ;; global options: +cmd
 ;; Got answer:
@@ -439,20 +440,23 @@ godiwal.com.            86400   IN      NS      masterdns.sethi.com.
 ;; SERVER: 192.168.0.10#53(192.168.0.10)
 ;; WHEN: Mon May 11 10:24:02 IST 2020
 ;; MSG SIZE  rcvd: 75
+```
 
-[root@client ~]#
+```
 [root@client ~]# nslookup masterdns.sethi.com
 Server:         192.168.0.10
 Address:        192.168.0.10#53
 
 Name:   dmasterdns.sethi.com
 Address: 192.168.0.10
+```
 
-
+```
 [root@client ~]# nslookup 192.168.0.10
 60.0.168.192.in-addr.arpa       name = masterdns.sethi.com.
+```
 
-
+```
 [root@client ~]# ping masterdns.sethi.com
 PING dns1.godiwal.com (192.168.0.60) 56(84) bytes of data.
 64 bytes from dns1.godiwal.com (192.168.0.60): icmp_seq=1 ttl=64 time=0.326 ms

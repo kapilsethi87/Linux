@@ -170,8 +170,7 @@ $TTL 86400
 masterdns       IN  A   192.168.0.10
 
 ;PTR Record IP address to HostName
-101     IN  PTR         masterdns.sethi.com.
-110     IN  PTR         mail.sethi.com. 
+10     IN  PTR         masterdns.sethi.com.
 
 ```
 

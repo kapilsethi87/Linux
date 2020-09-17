@@ -133,7 +133,7 @@ $TTL 86400
         86400       ;Minimum TTL
 )
 ;Name Server Information
-@       IN  NS          masterdns.sethi.com
+@       IN  NS          masterdns.sethi.com.
 
 ;IP address of Name Server
 @       IN  A           192.168.0.10
@@ -147,7 +147,7 @@ masterdns       IN  A   192.168.0.10
 ```
 
 2.2 Create Reverse Zone
-Create reverse.unixmen file in the ‘/var/named’ directory.
+Create reverse.sethi file in the ‘/var/named’ directory.
 
 vi /var/named/reverse.sethi
 
@@ -209,7 +209,7 @@ named-checkzone sethi.com /var/named/forward.sethi
 ```
 Sample output:
 ```bash
-zone unixmen.local/IN: loaded serial 2011071001
+zone sethi.com/IN: loaded serial 1002
 OK
 ```
 
@@ -232,103 +232,94 @@ systemctl enable named
 
 ##### When you run below command so you will see in end of the output `"SERVER: 192.168.0.10#53(192.168.0.10)"`. It's mean your DNS Server perfectly working.
 ```
-[sysadmin@dns-server ~]$ dig
-
-; <<>> DiG 9.11.4-P2-RedHat-9.11.4-16.P2.el7_8.2 <<>>
+dig
+; <<>> DiG 9.11.4-P2-RedHat-9.11.4-16.P2.el7_8.6 <<>>
 ;; global options: +cmd
 ;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 10119
-;; flags: qr rd ra ad; QUERY: 1, ANSWER: 13, AUTHORITY: 0, ADDITIONAL: 27
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 10789
+;; flags: qr rd ra; QUERY: 1, ANSWER: 13, AUTHORITY: 13, ADDITIONAL: 7
 
-;; OPT PSEUDOSECTION:
-; EDNS: version: 0, flags:; udp: 4096
 ;; QUESTION SECTION:
 ;.                              IN      NS
 
 ;; ANSWER SECTION:
-.                       518271  IN      NS      h.root-servers.net.
-.                       518271  IN      NS      f.root-servers.net.
-.                       518271  IN      NS      a.root-servers.net.
-.                       518271  IN      NS      k.root-servers.net.
-.                       518271  IN      NS      j.root-servers.net.
-.                       518271  IN      NS      e.root-servers.net.
-.                       518271  IN      NS      m.root-servers.net.
-.                       518271  IN      NS      l.root-servers.net.
-.                       518271  IN      NS      b.root-servers.net.
-.                       518271  IN      NS      d.root-servers.net.
-.                       518271  IN      NS      g.root-servers.net.
-.                       518271  IN      NS      c.root-servers.net.
-.                       518271  IN      NS      i.root-servers.net.
+.                       5       IN      NS      c.root-servers.net.
+.                       5       IN      NS      m.root-servers.net.
+.                       5       IN      NS      l.root-servers.net.
+.                       5       IN      NS      j.root-servers.net.
+.                       5       IN      NS      h.root-servers.net.
+.                       5       IN      NS      g.root-servers.net.
+.                       5       IN      NS      a.root-servers.net.
+.                       5       IN      NS      k.root-servers.net.
+.                       5       IN      NS      f.root-servers.net.
+.                       5       IN      NS      i.root-servers.net.
+.                       5       IN      NS      b.root-servers.net.
+.                       5       IN      NS      e.root-servers.net.
+.                       5       IN      NS      d.root-servers.net.
+
+;; AUTHORITY SECTION:
+.                       5       IN      NS      m.root-servers.net.
+.                       5       IN      NS      l.root-servers.net.
+.                       5       IN      NS      j.root-servers.net.
+.                       5       IN      NS      h.root-servers.net.
+.                       5       IN      NS      g.root-servers.net.
+.                       5       IN      NS      a.root-servers.net.
+.                       5       IN      NS      k.root-servers.net.
+.                       5       IN      NS      f.root-servers.net.
+.                       5       IN      NS      i.root-servers.net.
+.                       5       IN      NS      b.root-servers.net.
+.                       5       IN      NS      e.root-servers.net.
+.                       5       IN      NS      d.root-servers.net.
+.                       5       IN      NS      c.root-servers.net.
 
 ;; ADDITIONAL SECTION:
-a.root-servers.net.     518271  IN      A       198.41.0.4
-b.root-servers.net.     518271  IN      A       199.9.14.201
-c.root-servers.net.     518271  IN      A       192.33.4.12
-d.root-servers.net.     518271  IN      A       199.7.91.13
-e.root-servers.net.     518271  IN      A       192.203.230.10
-f.root-servers.net.     518271  IN      A       192.5.5.241
-g.root-servers.net.     518271  IN      A       192.112.36.4
-h.root-servers.net.     518271  IN      A       198.97.190.53
-i.root-servers.net.     518271  IN      A       192.36.148.17
-j.root-servers.net.     518271  IN      A       192.58.128.30
-k.root-servers.net.     518271  IN      A       193.0.14.129
-l.root-servers.net.     518271  IN      A       199.7.83.42
-m.root-servers.net.     518271  IN      A       202.12.27.33
-a.root-servers.net.     518271  IN      AAAA    2001:503:ba3e::2:30
-b.root-servers.net.     518271  IN      AAAA    2001:500:200::b
-c.root-servers.net.     518271  IN      AAAA    2001:500:2::c
-d.root-servers.net.     518271  IN      AAAA    2001:500:2d::d
-e.root-servers.net.     518271  IN      AAAA    2001:500:a8::e
-f.root-servers.net.     518271  IN      AAAA    2001:500:2f::f
-g.root-servers.net.     518271  IN      AAAA    2001:500:12::d0d
-h.root-servers.net.     518271  IN      AAAA    2001:500:1::53
-i.root-servers.net.     518271  IN      AAAA    2001:7fe::53
-j.root-servers.net.     518271  IN      AAAA    2001:503:c27::2:30
-k.root-servers.net.     518271  IN      AAAA    2001:7fd::1
-l.root-servers.net.     518271  IN      AAAA    2001:500:9f::42
-m.root-servers.net.     518271  IN      AAAA    2001:dc3::35
+c.root-servers.net.     5       IN      A       192.33.4.12
+g.root-servers.net.     5       IN      A       192.112.36.4
+a.root-servers.net.     5       IN      A       198.41.0.4
+f.root-servers.net.     5       IN      A       192.5.5.241
+b.root-servers.net.     5       IN      A       199.9.14.201
+e.root-servers.net.     5       IN      A       192.203.230.10
+d.root-servers.net.     5       IN      A       199.7.91.13
 
-;; Query time: 0 msec
-;; SERVER: 192.168.0.60#53(192.168.0.60)
-;; WHEN: Mon May 11 10:00:48 IST 2020
-;; MSG SIZE  rcvd: 811
-
-[sysadmin@dns-server ~]$
+;; Query time: 9 msec
+;; SERVER: 192.168.0.10#53(192.168.0.10)
+;; WHEN: Thu Sep 17 08:51:10 IST 2020
+;; MSG SIZE  rcvd: 509
 ```
 
 ##### Now we'll check our Domain Name with dig and nslookup command.
 ```
-[sysadmin@dns-server ~]$ dig masterdns.sethi.com
+[root@masterdns ~]# dig masterdns.sethi.com
 
-; <<>> DiG 9.11.4-P2-RedHat-9.11.4-16.P2.el7_8.2 <<>> dns1.godiwal.com
+; <<>> DiG 9.11.4-P2-RedHat-9.11.4-16.P2.el7_8.6 <<>> masterdns.sethi.com
 ;; global options: +cmd
 ;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 50473
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 54439
 ;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1
 
 ;; OPT PSEUDOSECTION:
 ; EDNS: version: 0, flags:; udp: 4096
 ;; QUESTION SECTION:
-;dns1.godiwal.com.              IN      A
+;masterdns.sethi.com.           IN      A
 
 ;; ANSWER SECTION:
-dns1.godiwal.com.       86400   IN      A       192.168.0.10
+masterdns.sethi.com.    86400   IN      A       192.168.0.10
 
 ;; AUTHORITY SECTION:
-godiwal.com.            86400   IN      NS      masterdns.sethi.com.
+sethi.com.              86400   IN      NS      masterdns.sethi.com.
 
 ;; Query time: 0 msec
 ;; SERVER: 192.168.0.10#53(192.168.0.10)
-;; WHEN: Mon May 11 10:03:51 IST 2020
-;; MSG SIZE  rcvd: 75
-
-[sysadmin@dns-server ~]$
-[sysadmin@dns-server ~]$ nslookup masterdns.sethi.com
+;; WHEN: Thu Sep 17 08:58:01 IST 2020
+;; MSG SIZE  rcvd: 78
+```
+[root@masterdns ~]# nslookup masterdns.sethi.com
 Server:         192.168.0.10
 Address:        192.168.0.10#53
 
 Name:   masterdns.sethi.com
-Address: 192.168.0.10
+Address: 192.168.0.11
+
 
 [sysadmin@dns-server ~]$
 [sysadmin@dns-server ~]$ nslookup 192.168.0.10

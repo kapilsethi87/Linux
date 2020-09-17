@@ -322,11 +322,10 @@ Address:        192.168.0.10#53
 Name:   masterdns.sethi.com
 Address: 192.168.0.10
 ```
-
-[sysadmin@dns-server ~]$ nslookup 192.168.0.10
+```
+[root@masterdns ~]$ nslookup 192.168.0.10
 10.0.168.192.in-addr.arpa       name = masterdns.sethi.com.
-
-[sysadmin@dns-server ~]$
+```
 
 ```
 

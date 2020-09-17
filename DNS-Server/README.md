@@ -382,39 +382,6 @@ PING 192.168.0.10 (192.168.0.10) 56(84) bytes of data.
 yum install bind-utils -y
 ```
 
-```
-[root@client ~]# dig dns1.vardhan.com
-; <<>> DiG 9.11.4-P2-RedHat-9.11.4-16.P2.el7_8.2 <<>> dns1.vardhan.com
-;; global options: +cmd
-;; Got answer:
-;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 38530
-;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 7
-
-;; OPT PSEUDOSECTION:
-; EDNS: version: 0, flags:; udp: 4096
-;; QUESTION SECTION:
-;dns1.vardhan.com.              IN      A
-
-;; ANSWER SECTION:
-dns1.vardhan.com.       3600    IN      A       69.172.201.153
-
-;; AUTHORITY SECTION:
-vardhan.com.            172800  IN      NS      buy.internettraffic.com.
-vardhan.com.            172800  IN      NS      sell.internettraffic.com.
-
-;; ADDITIONAL SECTION:
-buy.internettraffic.com. 55969  IN      A       52.89.18.51
-buy.internettraffic.com. 55969  IN      A       54.152.30.238
-buy.internettraffic.com. 55969  IN      A       35.211.36.175
-sell.internettraffic.com. 55969 IN      A       34.247.146.68
-sell.internettraffic.com. 55969 IN      A       18.217.16.210
-sell.internettraffic.com. 55969 IN      A       34.90.60.247
-
-;; Query time: 486 msec
-;; SERVER: 8.8.8.8#53(8.8.8.8)
-;; WHEN: Mon May 11 10:20:38 IST 2020
-;; MSG SIZE  rcvd: 210
-```
 ##### It will not show your DNS Server details. So you have to resolve your DNS Server. 
 ```
 [root@client ~]# cat /etc/resolv.conf

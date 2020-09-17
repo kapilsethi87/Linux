@@ -377,10 +377,13 @@ PING 192.168.0.10 (192.168.0.10) 56(84) bytes of data.
 ^C
 ```
 ##### Install dig command for checking our DNS Server from Client Host. 
-```
-[root@client ~]# yum install bind-utils -y
-[root@client ~]# dig dns1.vardhan.com
 
+```
+yum install bind-utils -y
+```
+
+```
+[root@client ~]# dig dns1.vardhan.com
 ; <<>> DiG 9.11.4-P2-RedHat-9.11.4-16.P2.el7_8.2 <<>> dns1.vardhan.com
 ;; global options: +cmd
 ;; Got answer:

@@ -176,9 +176,6 @@ $TTL 86400
 ;IP address of Name Server
 @       IN  A           192.168.0.10
 
-;Mail exchanger
-sethi.com. IN  MX 10   mail.sethi.com.
-
 ;A - Record HostName To IP Address
 masterdns       IN  A   192.168.0.10
 
@@ -369,18 +366,20 @@ Address: 192.168.0.10
 
 ##### Check Client to Server connectivity with ping command.
 ```
-[root@dns-client ~]# ping 192.168.0.10
-PING 192.168.0.60 (192.168.0.10) 56(84) bytes of data.
-64 bytes from 192.168.0.60: icmp_seq=1 ttl=64 time=1.07 ms
-64 bytes from 192.168.0.60: icmp_seq=2 ttl=64 time=0.417 ms
-64 bytes from 192.168.0.60: icmp_seq=3 ttl=64 time=0.414 ms
-64 bytes from 192.168.0.60: icmp_seq=4 ttl=64 time=0.465 ms
-[root@dns-client ~]#
+[root@client ~]# ping 192.168.0.10
+PING 192.168.0.10 (192.168.0.10) 56(84) bytes of data.
+64 bytes from 192.168.0.10: icmp_seq=1 ttl=64 time=0.360 ms
+64 bytes from 192.168.0.10: icmp_seq=2 ttl=64 time=1.02 ms
+64 bytes from 192.168.0.10: icmp_seq=3 ttl=64 time=0.820 ms
+64 bytes from 192.168.0.10: icmp_seq=4 ttl=64 time=0.990 ms
+64 bytes from 192.168.0.10: icmp_seq=5 ttl=64 time=0.413 ms
+64 bytes from 192.168.0.10: icmp_seq=6 ttl=64 time=1.12 ms
+^C
 ```
 ##### Install dig command for checking our DNS Server from Client Host. 
 ```
-[root@dns-client ~]# yum install bind-utils -y
-[root@dns-client ~]# dig dns1.vardhan.com
+[root@client ~]# yum install bind-utils -y
+[root@client ~]# dig dns1.vardhan.com
 
 ; <<>> DiG 9.11.4-P2-RedHat-9.11.4-16.P2.el7_8.2 <<>> dns1.vardhan.com
 ;; global options: +cmd
@@ -412,15 +411,12 @@ sell.internettraffic.com. 55969 IN      A       34.90.60.247
 ;; SERVER: 8.8.8.8#53(8.8.8.8)
 ;; WHEN: Mon May 11 10:20:38 IST 2020
 ;; MSG SIZE  rcvd: 210
-
-[root@dns-client ~]#
 ```
 ##### It will not show your DNS Server details. So you have to resolve your DNS Server. 
 ```
-[root@dns-client ~]# cat /etc/resolv.conf
+[root@client ~]# cat /etc/resolv.conf
 nameserver 192.168.0.60
-[root@dns-client ~]#
-[root@dns-client ~]# dig dns1.godiwal.com
+[root@client ~]# dig dns1.godiwal.com
 
 ; <<>> DiG 9.11.4-P2-RedHat-9.11.4-16.P2.el7_8.2 <<>> dns1.godiwal.com
 ;; global options: +cmd
@@ -444,21 +440,20 @@ godiwal.com.            86400   IN      NS      dns1.godiwal.com.
 ;; WHEN: Mon May 11 10:24:02 IST 2020
 ;; MSG SIZE  rcvd: 75
 
-[root@dns-client ~]#
-[root@dns-client ~]# nslookup dns1.godiwal.com
-Server:         192.168.0.60
-Address:        192.168.0.60#53
+[root@client ~]#
+[root@client ~]# nslookup masterdns.sethi.com
+Server:         192.168.0.10
+Address:        192.168.0.10#53
 
-Name:   dns1.godiwal.com
-Address: 192.168.0.60
+Name:   dmasterdns.sethi.com
+Address: 192.168.0.10
 
-[root@dns-client ~]#
-[root@dns-client ~]# nslookup 192.168.0.60
-60.0.168.192.in-addr.arpa       name = dns1.godiwal.com.
 
-[root@dns-client ~]#
+[root@client ~]# nslookup 192.168.0.10
+60.0.168.192.in-addr.arpa       name = masterdns.sethi.com.
 
-[root@dns-client ~]# ping dns1.godiwal.com
+
+[root@client ~]# ping masterdns.sethi.com
 PING dns1.godiwal.com (192.168.0.60) 56(84) bytes of data.
 64 bytes from dns1.godiwal.com (192.168.0.60): icmp_seq=1 ttl=64 time=0.326 ms
 64 bytes from dns1.godiwal.com (192.168.0.60): icmp_seq=2 ttl=64 time=0.813 ms
@@ -468,7 +463,6 @@ PING dns1.godiwal.com (192.168.0.60) 56(84) bytes of data.
 64 bytes from dns1.godiwal.com (192.168.0.60): icmp_seq=6 ttl=64 time=1.25 ms
 64 bytes from dns1.godiwal.com (192.168.0.60): icmp_seq=7 ttl=64 time=3.30 ms
 ^C
-[root@dns-client ~]#
 ```
 
 # `SUCCESSFULLY COMPLETE`

@@ -33,6 +33,41 @@ IP Address           : 192.168.0.12/24
 
 ## Setup Primary (Master) DNS Server
 
+##### Provide the `static IP address` to DNS Server.
+```
+[root@masterdns ~]# cat /etc/sysconfig/network-scripts/ifcfg-ens33
+TYPE=Ethernet
+BOOTPROTO=static
+NAME=ens33
+IPADDR=192.168.0.10
+NETMASK=255.255.255.0
+GATEWAY=192.168.0.2
+DEVICE=ens33
+ONBOOT=yes
+```
+##### Set the `hostname` in the network file.
+```
+[root@masterdns ~]#  cat /etc/sysconfig/network
+# Created by anaconda
+
+HOSTNAME=masterdns.sethi.com
+```
+
+##### Add entry `"Server_IP   Your_Domain_Name"` in `"/etc/hosts"` file 
+```
+[root@masterdns ~]# cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+192.168.0.10   masterdns.sethi.com
+```
+
+##### Add `nameserver` in `"/etc/resolv.conf"` file for resolve the nameserver.
+```
+[root@masterdns ~]# cat /etc/resolv.conf
+nameserver 192.168.0.10
+```
+
 ### Install bind packages on your server
 ```bash
 yum install bind bind-utils -y
